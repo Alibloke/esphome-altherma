@@ -8,12 +8,12 @@
 #include <vector>
 
 class LabelDef;
-class Converter;
 
 namespace esphome
 {
   namespace altherma_hub
   {
+    class Converter;
 
     class AlthermaSensorBase
     {

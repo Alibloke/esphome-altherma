@@ -1,28 +1,29 @@
 #include "altherma_hub.h"
 #include "esphome/core/log.h"
-#include "labeldef.h"
-
 #include "mock_uart.h"
-// Work arounds to satisfy converters.h
+#include "labeldef.h"
 LabelDef labelDefs[] = {};
 
-static const char *const CONV_TAG = "altherma_conv";
-struct FakeSerial {
-  void print(const char *msg) {
-    ESP_LOGV(CONV_TAG, "%s", msg);
-  }
+//namespace espaltherma {
 
-  template<typename... Args>
-  void printf(const char *fmt, Args... args) {
-    ESP_LOGV(CONV_TAG, fmt, args...);
-  }  
-};
-static FakeSerial Serial;
+  // Work arounds to satisfy converters.h
+  static const char *const CONV_TAG = "altherma_conv";
+  struct FakeSerial {
+    void print(const char *msg) {
+      ESP_LOGV(CONV_TAG, "%s", msg);
+    }
 
-#include "converters.h"
+    template<typename... Args>
+    void printf(const char *fmt, Args... args) {
+      ESP_LOGV(CONV_TAG, fmt, args...);
+    }  
+  };
+  static FakeSerial Serial;
 
+//}
 namespace esphome {
 namespace altherma_hub {
+  #include "converters.h"
 
 static const char *TAG = "altherma_hub";
 static constexpr size_t BUFFER_SIZE = 64;
