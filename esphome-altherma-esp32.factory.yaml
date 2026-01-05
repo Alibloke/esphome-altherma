@@ -35,4 +35,4 @@ update:
   - platform: http_request
     name: None
     id: update_http_request
-    source: https://github.com/jjohnsen/esphome-altherma/releases/latest/download/altherma.manifest.json
+    source: https://github.com/jjohnsen/esphome-altherma/releases/latest/download/esphome-altherma.manifest.json
