@@ -2,6 +2,8 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 from esphome.components import uart
+import os
+from pathlib import Path
 
 DEPENDENCIES = ["uart"]
 AUTO_LOAD = ["sensor", "text_sensor", "binary_sensor"]
@@ -29,6 +31,12 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
+
+    # Get the absolute path to the lib directory
+    lib_path = Path(__file__).parent / "lib"
+    
+    # Add as extra script to copy files
+    cg.add_platformio_option("build_flags", [f"-I{lib_path.as_posix()}"])
 
 
 # Shared configuration constants
