@@ -1,5 +1,5 @@
 packages:
-  board: !include esphome-altherma-aroms3.yaml
+  board: !include esphome-altherma-atoms3.yaml
 
 esphome:
   # This will allow for project identification,
