@@ -1,7 +1,4 @@
 packages:
-  # Include all of the core configuration
-  #core: !include esphome-altherma-esp32.yaml
-  base: !include base.yaml  
   board: !include esphome-altherma-esp32-s3.yaml
 
 esphome:
