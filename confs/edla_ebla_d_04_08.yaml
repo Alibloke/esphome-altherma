@@ -1,0 +1,320 @@
+.altherma_base: &altherma_base
+  platform: altherma_hub
+  altherma_hub_id: altherma_hub_1
+
+.temp: &temp
+  <<: *altherma_base
+  device_class: temperature
+  unit_of_measurement: "°C"
+  state_class: measurement
+  accuracy_decimals: 1
+
+.pressure: &pressure
+  <<: *altherma_base
+  device_class: pressure
+  unit_of_measurement: "bar"
+  state_class: measurement
+  accuracy_decimals: 2
+
+.flow: &flow
+  <<: *altherma_base
+  unit_of_measurement: "l/min"
+  icon: "mdi:water-pump"
+  state_class: measurement
+  accuracy_decimals: 1
+
+.current: &current
+  <<: *altherma_base
+  device_class: current
+  unit_of_measurement: "A"
+  state_class: measurement
+  accuracy_decimals: 1
+
+.frequency: &frequency
+  <<: *altherma_base
+  unit_of_measurement: "Hz"
+  icon: "mdi:sine-wave"
+  state_class: measurement
+
+.binary: &binary
+  <<: *altherma_base
+
+.text: &text
+  <<: *altherma_base
+  icon: "mdi:text-box-outline"
+
+sensor:
+  # {0x20,0,105,2,1,"R1T-Outdoor air temp."}
+  - <<: *temp
+    name: "Outdoor Air Temp (R1T)"
+    register: 0x20
+    offset: 0
+    convid: 105
+    datasize: 2
+
+  # {0x20,8,105,2,1,"Heat exchanger mid-temp."}
+  - <<: *temp
+    name: "Heat Exchanger Mid-Temp"
+    register: 0x20
+    offset: 8
+    convid: 105
+    datasize: 2
+
+  # {0xA1,0,119,2,1,"(Raw data)Water heat exchanger inlet temp."}
+  - <<: *temp
+    name: "Water Heat Exchanger Inlet Temp (Raw)"
+    register: 0xA1
+    offset: 0
+    convid: 119
+    datasize: 2
+
+  # {0xA1,2,119,2,1,"(Raw data)Water heat exchanger outlet temp."}
+  - <<: *temp
+    name: "Water Heat Exchanger Outlet Temp (Raw)"
+    register: 0xA1
+    offset: 2
+    convid: 119
+    datasize: 2
+
+  # {0x60,7,105,2,1,"DHW setpoint"}
+  - <<: *temp
+    name: "DHW Setpoint"
+    register: 0x60
+    offset: 7
+    convid: 105
+    datasize: 2
+
+  # {0x60,9,105,2,1,"LW setpoint (main)"}
+  - <<: *temp
+    name: "LW Setpoint (Main)"
+    register: 0x60
+    offset: 9
+    convid: 105
+    datasize: 2
+
+  # {0x61,2,105,2,1,"Leaving water temp. before BUH (R1T)"}
+  - <<: *temp
+    name: "Leaving Water Temp Before BUH (R1T)"
+    register: 0x61
+    offset: 2
+    convid: 105
+    datasize: 2
+
+  # {0x61,4,105,2,1,"Leaving water temp. after BUH (R2T)"}
+  - <<: *temp
+    name: "Leaving Water Temp After BUH (R2T)"
+    register: 0x61
+    offset: 4
+    convid: 105
+    datasize: 2
+
+  # {0x61,8,105,2,1,"Inlet water temp.(R4T)"}
+  - <<: *temp
+    name: "Inlet Water Temp (R4T)"
+    register: 0x61
+    offset: 8
+    convid: 105
+    datasize: 2
+
+  # {0x61,10,105,2,1,"DHW tank temp. (R5T)"}
+  - <<: *temp
+    name: "DHW Tank Temp (R5T)"
+    register: 0x61
+    offset: 10
+    convid: 105
+    datasize: 2
+
+  # {0x61,12,105,2,1,"Indoor ambient temp. (R1T)"}
+  - <<: *temp
+    name: "Indoor Ambient Temp (R1T)"
+    register: 0x61
+    offset: 12
+    convid: 105
+    datasize: 2
+
+  # {0x61,14,105,2,1,"Ext. indoor ambient sensor (R6T)"}
+  - <<: *temp
+    name: "Ext. Indoor Ambient Sensor (R6T)"
+    register: 0x61
+    offset: 14
+    convid: 105
+    datasize: 2
+
+  # {0x62,9,105,2,-1,"Flow sensor (l/min)"}
+  - <<: *flow
+    name: "Flow Sensor"
+    register: 0x62
+    offset: 9
+    convid: 105
+    datasize: 2
+
+  # {0x62,11,105,1,2,"Water pressure"}
+  - <<: *pressure
+    name: "Water Pressure"
+    register: 0x62
+    offset: 11
+    convid: 105
+    datasize: 1
+
+  # {0x62,15,105,2,2,"Refrigerant pressure sensor"}
+  - <<: *pressure
+    name: "Refrigerant Pressure Sensor"
+    register: 0x62
+    offset: 15
+    convid: 105
+    datasize: 2
+
+  # {0x21,0,105,2,-1,"INV primary current (A)"}
+  - <<: *current
+    name: "INV Primary Current"
+    register: 0x21
+    offset: 0
+    convid: 105
+    datasize: 2
+
+  # {0x21,2,105,2,-1,"INV secondary current (A)"}
+  - <<: *current
+    name: "INV Secondary Current"
+    register: 0x21
+    offset: 2
+    convid: 105
+    datasize: 2
+
+  # {0x63,14,161,1,-1,"Current measured by CT sensor of L1"}
+  - <<: *current
+    name: "Current L1"
+    register: 0x63
+    offset: 14
+    convid: 161
+    datasize: 1
+
+  # {0x63,15,161,1,-1,"Current measured by CT sensor of L2"}
+  - <<: *current
+    name: "Current L2"
+    register: 0x63
+    offset: 15
+    convid: 161
+    datasize: 1
+
+  # {0x63,16,161,1,-1,"Current measured by CT sensor of L3"}
+  - <<: *current
+    name: "Current L3"
+    register: 0x63
+    offset: 16
+    convid: 161
+    datasize: 1
+
+  # {0x30,0,152,1,-1,"INV frequency (rps)"}
+  - <<: *frequency
+    name: "INV Frequency"
+    register: 0x30
+    offset: 0
+    convid: 152
+    datasize: 1
+    unit_of_measurement: "rps"
+
+  # {0x30,1,211,1,-1,"Fan 1 (step)"}
+  - <<: *altherma_base
+    name: "Fan 1 Step"
+    register: 0x30
+    offset: 1
+    convid: 211
+    datasize: 1
+    icon: "mdi:fan"
+
+binary_sensor:
+  # {0x10,1,304,1,-1,"Defrost Operation"}
+  - <<: *binary
+    name: "Defrost Operation"
+    register: 0x10
+    offset: 1
+    convid: 304
+    datasize: 1
+    device_class: running
+
+  # {0x60,2,303,1,-1,"Thermostat ON/OFF"}
+  - <<: *binary
+    name: "Thermostat Status"
+    register: 0x60
+    offset: 2
+    convid: 303
+    datasize: 1
+    device_class: running
+
+  # {0x60,2,302,1,-1,"Freeze Protection"}
+  - <<: *binary
+    name: "Freeze Protection"
+    register: 0x60
+    offset: 2
+    convid: 302
+    datasize: 1
+    device_class: cold
+
+  # {0x60,12,306,1,-1,"3way valve(On:DHW_Off:Space)"}
+  - <<: *binary
+    name: "3-Way Valve (On:DHW, Off:Space)"
+    register: 0x60
+    offset: 12
+    convid: 306
+    datasize: 1
+    icon: "mdi:valve"
+
+  # {0x62,2,304,1,-1,"Powerful DHW Operation. ON/OFF"}
+  - <<: *binary
+    name: "Powerful DHW Operation"
+    register: 0x62
+    offset: 2
+    convid: 304
+    datasize: 1
+
+  # {0x62,2,303,1,-1,"Space heating Operation ON/OFF"}
+  - <<: *binary
+    name: "Space Heating Operation"
+    register: 0x62
+    offset: 2
+    convid: 303
+    datasize: 1
+    device_class: heat
+
+  # {0x62,8,302,1,-1,"Circulation pump operation"}
+  - <<: *binary
+    name: "Circulation Pump Operation"
+    register: 0x62
+    offset: 8
+    convid: 302
+    datasize: 1
+    device_class: running
+
+  # {0x30,11,307,1,-1,"4 Way Valve"}
+  - <<: *binary
+    name: "4-Way Valve"
+    register: 0x30
+    offset: 11
+    convid: 307
+    datasize: 1
+
+  # {0x64,9,301,1,-1,"Main pump"}
+  - <<: *binary
+    name: "Main Pump"
+    register: 0x64
+    offset: 9
+    convid: 301
+    datasize: 1
+    device_class: running
+
+text_sensor:
+  # {0x10,0,217,1,-1,"Operation Mode"}
+  - <<: *text
+    name: "Operation Mode"
+    register: 0x10
+    offset: 0
+    convid: 217
+    datasize: 1
+
+  # {0x10,12,307,1,-1,"Fin Temp. Drop Control"}
+  - <<: *text
+    name: "Fin Temp Drop Control"
+    register: 0x10
+    offset: 12
+    convid: 307
+    datasize: 1
